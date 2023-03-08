@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  split:
+    cmd: python scripts/split.py --seed 0 --test-size 0.1 --filename data/raw/cards.jsonl
+    deps:
+    - path: data/raw/cards.jsonl
+      md5: e8fb81560680a8ddc61c2b63a2e9c3df
+      size: 1691969
+    outs:
+    - path: data/splits/test.jsonl
+      md5: e22f94a045f2389a3777254619bd91d7
+      size: 170955
+    - path: data/splits/train.jsonl
+      md5: 35c0726c5d08c55e8ca2ecac5c9c9156
+      size: 1546034

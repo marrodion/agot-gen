@@ -1,0 +1,8 @@
+stages:
+  split:
+    cmd: python scripts/split.py --seed ${split.seed} --test-size ${split.test_size} --filename data/raw/cards.jsonl
+    deps:
+    - data/raw/cards.jsonl
+    outs:
+    - data/splits/test.jsonl
+    - data/splits/train.jsonl
