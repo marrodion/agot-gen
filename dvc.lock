@@ -35,3 +35,13 @@ stages:
     - path: data/lm/test.txt
       md5: dd1df3adcf25b480bac1d46bc906495a
       size: 37458
+  kenlm_train:
+    cmd: lmplz -o 3 --text data/lm/train.txt --arpa models/kenlm/lm.arpa
+    deps:
+    - path: data/lm/train.txt
+      md5: 3e48a008e8f47b4d79f7d01b4593faa8
+      size: 335686
+    outs:
+    - path: models/kenlm/lm.arpa
+      md5: d916e5667e8a3896afc08868e7cdf575
+      size: 1253954

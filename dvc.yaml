@@ -20,3 +20,10 @@ stages:
     - data/splits/test.jsonl
     outs:
     - data/lm/test.txt
+
+  kenlm_train:
+    cmd: lmplz -o ${kenlm.order} --text data/lm/train.txt --arpa models/kenlm/lm.arpa
+    deps:
+    - data/lm/train.txt
+    outs:
+    - models/kenlm/lm.arpa

@@ -4,3 +4,6 @@ split:
 
 lm_preprocess:
   key: type_code faction_code name cost text is_unique is_loyal
+
+kenlm:
+  order: 3
