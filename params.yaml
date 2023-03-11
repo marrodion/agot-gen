@@ -1,3 +1,6 @@
 split:
   seed: 0
   test_size: 0.1
+
+lm_preprocess:
+  key: type_code faction_code name cost text is_unique is_loyal

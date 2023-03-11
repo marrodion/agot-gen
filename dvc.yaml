@@ -6,3 +6,17 @@ stages:
     outs:
     - data/splits/test.jsonl
     - data/splits/train.jsonl
+
+  lm_preprocess_train:
+    cmd: python scripts/preprocess_lm.py data/splits/train.jsonl ${lm_preprocess.key}
+    deps:
+    - data/splits/train.jsonl
+    outs:
+    - data/lm/train.txt
+
+  lm_preprocess_test:
+    cmd: python scripts/preprocess_lm.py data/splits/test.jsonl ${lm_preprocess.key}
+    deps:
+    - data/splits/test.jsonl
+    outs:
+    - data/lm/test.txt
