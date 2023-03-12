@@ -36,15 +36,15 @@ stages:
       md5: dd1df3adcf25b480bac1d46bc906495a
       size: 37458
   kenlm_train:
-    cmd: lmplz -o 3 --text data/lm/train.txt --arpa models/kenlm/lm.arpa
+    cmd: lmplz -o 6 --text data/lm/train.txt --arpa models/kenlm/lm.arpa
     deps:
     - path: data/lm/train.txt
       md5: 3e48a008e8f47b4d79f7d01b4593faa8
       size: 335686
     outs:
     - path: models/kenlm/lm.arpa
-      md5: d916e5667e8a3896afc08868e7cdf575
-      size: 1253954
+      md5: 2c221a9b1608206509df0444f7e0cf62
+      size: 6988246
   kenlm_evaluate:
     cmd: python scripts/ngram_lm.py
     deps:
@@ -55,9 +55,9 @@ stages:
       md5: 3e48a008e8f47b4d79f7d01b4593faa8
       size: 335686
     - path: models/kenlm/lm.arpa
-      md5: d916e5667e8a3896afc08868e7cdf575
-      size: 1253954
+      md5: 2c221a9b1608206509df0444f7e0cf62
+      size: 6988246
     outs:
     - path: metrics/kenlm.json
-      md5: 2cf3d0cfc74ae421fee0c825504215c7
+      md5: 6e451096a7e1ecc3272debb768bb8fa8
       size: 72
