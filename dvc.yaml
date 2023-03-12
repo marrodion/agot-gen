@@ -27,3 +27,12 @@ stages:
     - data/lm/train.txt
     outs:
     - models/kenlm/lm.arpa
+
+  kenlm_evaluate:
+    cmd: python scripts/ngram_lm.py
+    deps:
+    - data/lm/train.txt
+    - data/lm/test.txt
+    - models/kenlm/lm.arpa
+    metrics:
+    - metrics/kenlm.json
