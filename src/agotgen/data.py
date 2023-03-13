@@ -1,11 +1,16 @@
+import csv
 from pathlib import Path
 from typing import List
-import typer
+
 import pandas as pd
-import csv
+import typer
+from sklearn.model_selection import train_test_split
+
+app = typer.Typer()
 
 
-def main(filename: Path, key: List[str]):
+@app.command()
+def preprocess_kenlm(filename: Path, key: List[str]):
     df = pd.read_json(filename, orient="records", lines=True)
     text = df[key[0]]
     for col in key[1:]:
@@ -22,6 +27,25 @@ def main(filename: Path, key: List[str]):
     )
 
 
+@app.command()
+def split(
+    seed: int = typer.Option(...),
+    test_size: float = typer.Option(...),
+    filename: Path = typer.Option(...),
+):
+    key = ["type_code", "faction_code", "is_unique"]
+    df = pd.read_json(filename, orient="records", lines=True)
+    key = df[key].astype(str).sum(axis=1)
+    train, test = train_test_split(
+        df,
+        test_size=test_size,
+        random_state=seed,
+        stratify=key,
+    )
+    train.to_json("./data/splits/train.jsonl", orient="records", lines=True)
+    test.to_json("./data/splits/test.jsonl", orient="records", lines=True)
+
+
 def cleanup(text: pd.Series) -> pd.Series:
     text = text.str.lower()
     text = text.str.replace("\n", "", regex=False)
@@ -29,7 +53,3 @@ def cleanup(text: pd.Series) -> pd.Series:
     text = text.str.replace(r"\.\S", ". ", regex=True)
     text = text.str.replace(r"\s+", " ", regex=True)
     return text
-
-
-if __name__ == "__main__":
-    typer.run(main)

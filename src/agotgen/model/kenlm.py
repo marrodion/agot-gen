@@ -1,6 +1,7 @@
-import typer
-import kenlm
 import json
+
+import kenlm
+import typer
 
 app = typer.Typer()
 
@@ -25,7 +26,3 @@ def get_perplexity(model, fn) -> float:
             perplexity += model.perplexity(line.strip())
             n += 1
     return perplexity / n
-
-
-if __name__ == "__main__":
-    app()
