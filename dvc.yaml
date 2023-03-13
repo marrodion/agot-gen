@@ -1,6 +1,6 @@
 stages:
   split:
-    cmd: python scripts/split.py --seed ${split.seed} --test-size ${split.test_size} --filename data/raw/cards.jsonl
+    cmd: agot data split --seed ${split.seed} --test-size ${split.test_size} --filename data/raw/cards.jsonl
     deps:
     - data/raw/cards.jsonl
     outs:
@@ -8,14 +8,14 @@ stages:
     - data/splits/train.jsonl
 
   lm_preprocess_train:
-    cmd: python scripts/preprocess_lm.py data/splits/train.jsonl ${lm_preprocess.key}
+    cmd: agot data preprocess-kenlm data/splits/train.jsonl ${lm_preprocess.key}
     deps:
     - data/splits/train.jsonl
     outs:
     - data/lm/train.txt
 
   lm_preprocess_test:
-    cmd: python scripts/preprocess_lm.py data/splits/test.jsonl ${lm_preprocess.key}
+    cmd: agot data preprocess-kenlm data/splits/test.jsonl ${lm_preprocess.key}
     deps:
     - data/splits/test.jsonl
     outs:
@@ -29,7 +29,7 @@ stages:
     - models/kenlm/lm.arpa
 
   kenlm_evaluate:
-    cmd: python scripts/ngram_lm.py
+    cmd: agot kenlm evaluate
     deps:
     - data/lm/train.txt
     - data/lm/test.txt

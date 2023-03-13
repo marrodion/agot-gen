@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   split:
-    cmd: python scripts/split.py --seed 0 --test-size 0.1 --filename data/raw/cards.jsonl
+    cmd: agot data split --seed 0 --test-size 0.1 --filename data/raw/cards.jsonl
     deps:
     - path: data/raw/cards.jsonl
       md5: e8fb81560680a8ddc61c2b63a2e9c3df
@@ -14,7 +14,7 @@ stages:
       md5: 35c0726c5d08c55e8ca2ecac5c9c9156
       size: 1546034
   lm_preprocess_train:
-    cmd: python scripts/preprocess_lm.py data/splits/train.jsonl type_code faction_code
+    cmd: agot data preprocess-kenlm data/splits/train.jsonl type_code faction_code
       name cost text is_unique is_loyal
     deps:
     - path: data/splits/train.jsonl
@@ -25,7 +25,7 @@ stages:
       md5: 3e48a008e8f47b4d79f7d01b4593faa8
       size: 335686
   lm_preprocess_test:
-    cmd: python scripts/preprocess_lm.py data/splits/test.jsonl type_code faction_code
+    cmd: agot data preprocess-kenlm data/splits/test.jsonl type_code faction_code
       name cost text is_unique is_loyal
     deps:
     - path: data/splits/test.jsonl
@@ -46,7 +46,7 @@ stages:
       md5: 2c221a9b1608206509df0444f7e0cf62
       size: 6988246
   kenlm_evaluate:
-    cmd: python scripts/ngram_lm.py
+    cmd: agot kenlm evaluate
     deps:
     - path: data/lm/test.txt
       md5: dd1df3adcf25b480bac1d46bc906495a
